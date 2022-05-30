@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: rebuild
+
+on: [push]
+
+jobs:
+
+
+  build:
+    runs-on : ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        
+      - name: formatter_lib
+        shell: bash
+        run: |
+            cd formatter_lib/
+            cmake -H. -B_build
+            cmake --build _build
+      - name: formatter_ex_lib
+        shell: bash
+        run: |
+            cd formatter_ex_lib/
+            cmake -H. -B_build
+            cmake --build _build
+      - name: hello_world_application
+        shell: bash
+        run: |
+            cd hello_world_application/
+            cmake CMakeLists.txt
+            make
+            ./hw
+      - name: solver_app
+        shell: bash
+        run: |
+            cd solver_application/
+            cmake CMakeLists.txt
+            make
+            ./solver
